@@ -10,7 +10,7 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
     /// <typeparam name="TLocalization">The localization type.</typeparam>
     /// <typeparam name="TKey">The localization key type.</typeparam>
     /// <typeparam name="TValue">The localized value type.</typeparam>
-    internal class LocalizationDescriptor<TLocalization, TKey, TValue> : IDisposable where TLocalization : Localization<TKey, TValue>
+    public class LocalizationDescriptor<TLocalization, TKey, TValue> : IDisposable where TLocalization : Localization<TKey, TValue>
     {
         /// <summary>
         /// The name of the culture.
