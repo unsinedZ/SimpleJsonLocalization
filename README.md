@@ -1,2 +1,2 @@
 # Unsinedz.SimpleJsonLocalization
-Simple .NET Core JSON localization
+Simple .NET JSON localization
