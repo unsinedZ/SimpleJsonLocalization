@@ -24,24 +24,32 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
         /// <inheritdoc />
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
-            if (!includeParentCultures)
-                return this.GetMatchingProvider(this.DefaultCulture).Values.Select(x => new LocalizedString(x.Key, x.Value));
+            var providers = new List<ILocalizableResourceProvider<string, string>> { GetMatchingProvider(DefaultCulture) };
+            if (includeParentCultures)
+            {
+                var initialCulture = providers[0].GetCulture();
+                var cultures = new List<CultureInfo>();
+                while (!string.IsNullOrWhiteSpace(initialCulture.Name))
+                    cultures.Add(initialCulture = initialCulture.Parent);
 
-            return this.Providers.SelectMany(x => x.Value.Values).Select(x => new LocalizedString(x.Key, x.Value));
+                providers.AddRange(cultures.Select(GetMatchingProvider).Distinct());
+            }
+
+            return providers.SelectMany(x => x.Values).Select(x => new LocalizedString(x.Key, x.Value));
         }
 
         /// <inheritdoc />
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
-            this.DefaultCulture = culture;
+            DefaultCulture = culture;
             return this;
         }
 
         /// <inheritdoc />
-        public LocalizedString this[string name] => new LocalizedString(name, this.Localize(name, out bool notFound, name), notFound);
+        public LocalizedString this[string name] => new LocalizedString(name, Localize(name, out bool notFound, name, CultureInfo.CurrentUICulture), notFound);
 
         /// <inheritdoc />
         public LocalizedString this[string name, params object[] arguments] =>
-            new LocalizedString(name, string.Format(this.Localize(name, out var notFound, name), arguments), notFound);
+            new LocalizedString(name, string.Format(Localize(name, out var notFound, name, CultureInfo.CurrentUICulture), arguments), notFound);
     }
 }
