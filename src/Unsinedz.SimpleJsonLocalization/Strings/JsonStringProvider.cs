@@ -12,7 +12,7 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
     /// <summary>
     /// The JSON string localizable resource provider.
     /// </summary>
-    internal class JsonStringProvider : ILocalizableResourceProvider<string, string>
+    public class JsonStringProvider : ILocalizableResourceProvider<string, string>
     {
         /// <summary>
         /// The resource file name.

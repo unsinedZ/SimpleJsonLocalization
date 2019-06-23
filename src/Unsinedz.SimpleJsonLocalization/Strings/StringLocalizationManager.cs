@@ -10,7 +10,7 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
     /// <summary>
     /// Manages string localizations.
     /// </summary>
-    internal class StringLocalizationManager : LocalizationManager<string, string>, IStringLocalizer
+    public class StringLocalizationManager : LocalizationManager<string, string>, IStringLocalizer
     {
         /// <summary>
         /// Creates an instance of <see cref="StringLocalizationManager" />.

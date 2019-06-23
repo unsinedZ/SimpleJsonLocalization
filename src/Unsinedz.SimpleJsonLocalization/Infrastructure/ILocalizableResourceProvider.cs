@@ -9,7 +9,7 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
     /// </summary>
     /// <typeparam name="TKey">The localization key type.</typeparam>
     /// <typeparam name="TResource">The localizable resource type.</typeparam>
-    internal interface ILocalizableResourceProvider<TKey, TResource> : IDisposable
+    public interface ILocalizableResourceProvider<TKey, TResource> : IDisposable
     {
         /// <summary>
         /// The dictionary, that contains all localized values.

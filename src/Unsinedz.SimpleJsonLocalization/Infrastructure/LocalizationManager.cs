@@ -12,7 +12,7 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
     /// </summary>
     /// <typeparam name="TResourceKey">The resource key type.</typeparam>
     /// <typeparam name="TResourceValue">The resource value type.</typeparam>
-    internal class LocalizationManager<TResourceKey, TResourceValue> : IResourceReader
+    public class LocalizationManager<TResourceKey, TResourceValue> : IResourceReader
     {
         /// <summary>
         /// The dictionary, that contains localizable resource providers per culture.

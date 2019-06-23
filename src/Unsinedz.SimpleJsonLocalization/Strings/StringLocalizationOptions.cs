@@ -7,7 +7,7 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
     /// <summary>
     /// The string localization options.
     /// </summary>
-    internal class StringLocalizationOptions
+    public class StringLocalizationOptions
     {
         /// <summary>
         /// The default culture, that is used as a fallback during localization.
