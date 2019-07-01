@@ -1,0 +1,61 @@
+{
+  "CultureName": "en-US",
+  "Localizations": [
+    {
+      "Key": "SiteName",
+      "Value": "WebApp"
+    },
+    {
+      "Key": "CopyrightYear",
+      "Value": "2019"
+    },
+    {
+      "Key": "HomePage_Heading",
+      "Value": "Welcome"
+    },
+    {
+      "Key": "HomePage_LearnAbout",
+      "Value": "Learn about"
+    },
+    {
+      "Key": "HomePage_LinkText",
+      "Value": "building Web apps with ASP.NET Core"
+    },
+    {
+      "Key": "Navigation_Home",
+      "Value": "Home"
+    },
+    {
+      "Key": "Navigation_Privacy",
+      "Value": "Privacy"
+    },
+    {
+      "Key": "PrivacyPage_Heading",
+      "Value": "Privacy policy"
+    },
+    {
+      "Key": "PrivacyPage_Content",
+      "Value": "Use this page to detail your site's privacy policy."
+    },
+    {
+      "Key": "LearnMore",
+      "Value": "Learn more"
+    },
+    {
+      "Key": "Accept",
+      "Value": "Accept"
+    },
+    {
+      "Key": "CookieConsent_Content",
+      "Value": "Use this space to summarize your privacy and cookie use policy."
+    },
+    {
+      "Key": "ErrorPage_Heading",
+      "Value": "Error"
+    },
+    {
+      "Key": "ErrorPage_Content",
+      "Value": "An error occurred while processing your request."
+    }
+  ]
+}
