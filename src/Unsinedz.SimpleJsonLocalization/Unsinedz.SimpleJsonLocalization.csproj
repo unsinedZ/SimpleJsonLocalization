@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Unsinedz.SimpleJsonLocalization</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Denys Zosimovych</Authors>
     <Company>Denys Zosimovych</Company>
     <Title>Unsinedz Simple JSON Localization</Title>
