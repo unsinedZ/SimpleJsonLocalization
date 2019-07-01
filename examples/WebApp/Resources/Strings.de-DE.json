@@ -1,0 +1,61 @@
+{
+  "CultureName": "de-DE",
+  "Localizations": [
+    {
+      "Key": "SiteName",
+      "Value": "WebApp"
+    },
+    {
+      "Key": "CopyrightYear",
+      "Value": "2019"
+    },
+    {
+      "Key": "HomePage_Heading",
+      "Value": "Willkommen"
+    },
+    {
+      "Key": "HomePage_LearnAbout",
+      "Value": "Erfahren Sie mehr über"
+    },
+    {
+      "Key": "HomePage_LinkText",
+      "Value": "Webanwendungen mit ASP.NET Core"
+    },
+    {
+      "Key": "Navigation_Home",
+      "Value": "Startseite"
+    },
+    {
+      "Key": "Navigation_Privacy",
+      "Value": "Privatsphäre"
+    },
+    {
+      "Key": "PrivacyPage_Heading",
+      "Value": "Datenschutz-Bestimmungen"
+    },
+    {
+      "Key": "PrivacyPage_Content",
+      "Value": "Auf dieser Seite erfahren Sie mehr über die Datenschutzbestimmungen Ihrer Website."
+    },
+    {
+      "Key": "LearnMore",
+      "Value": "Mehr verdienen"
+    },
+    {
+      "Key": "Accept",
+      "Value": "Akzeptieren"
+    },
+    {
+      "Key": "CookieConsent_Content",
+      "Value": "In diesem Bereich können Sie Ihre Datenschutz- und Cookie-Verwendungsrichtlinien zusammenfassen."
+    },
+    {
+      "Key": "ErrorPage_Heading",
+      "Value": "Fehler"
+    },
+    {
+      "Key": "ErrorPage_Content",
+      "Value": "Bei der Verarbeitung Ihrer Anfrage ist ein Fehler aufgetreten."
+    }
+  ]
+}
