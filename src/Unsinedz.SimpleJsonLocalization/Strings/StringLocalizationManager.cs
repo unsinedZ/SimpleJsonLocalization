@@ -16,10 +16,17 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
         /// Creates an instance of <see cref="StringLocalizationManager" />.
         /// </summary>
         /// <param name="options">The string localization options accessor.</param>
-        public StringLocalizationManager(IOptions<StringLocalizationOptions> options) : base(options.Value?.DefaultCulture)
+        public StringLocalizationManager(IOptions<StringLocalizationOptions> options) : base(options.Value?.AllowFallbackToDefaultCulture ?? false)
         {
-            options.Value?.Providers?.ForEach(AddResourceProvider);
+            var localizationOptions = options.Value;
+            if (localizationOptions != null)
+            {
+                DefaultCulture = localizationOptions.DefaultCulture ?? DefaultCulture;
+                localizationOptions.Providers?.ForEach(AddResourceProvider);
+            }
         }
+
+        #region IStringLocalizer implementation
 
         /// <inheritdoc />
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
@@ -51,5 +58,7 @@ namespace Unsinedz.SimpleJsonLocalization.Strings
         /// <inheritdoc />
         public LocalizedString this[string name, params object[] arguments] =>
             new LocalizedString(name, string.Format(Localize(name, out var notFound, name, CultureInfo.CurrentUICulture), arguments), notFound);
+
+        #endregion
     }
 }

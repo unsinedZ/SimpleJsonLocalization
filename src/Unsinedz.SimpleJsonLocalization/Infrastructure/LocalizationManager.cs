@@ -23,15 +23,20 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
         /// <summary>
         /// The default culture, that is used as a fallback during localization.
         /// </summary>
-        protected CultureInfo DefaultCulture { get; set; }
+        protected CultureInfo DefaultCulture { get; set; } = CultureInfo.InvariantCulture;
+
+        /// <summary>
+        /// Fallback to default culture if the localization was not found for the specified one.
+        /// </summary>
+        protected bool AllowFallbackToDefaultCulture { get; set; }
 
         /// <summary>
         /// Creates an instnce of <see cref="LocalizationManager{TResourceKey, TResourceValue}" />.
         /// </summary>
         /// <param name="defaultCulture">The default culture, that is used as a fallback during localization.</param>
-        public LocalizationManager(CultureInfo defaultCulture = null)
+        public LocalizationManager(bool allowFallbackToDefaultCulture)
         {
-            DefaultCulture = defaultCulture ?? CultureInfo.InvariantCulture;
+            AllowFallbackToDefaultCulture = allowFallbackToDefaultCulture;
         }
 
         /// <summary>
@@ -77,7 +82,13 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
         /// </returns>
         public TResourceValue Localize(TResourceKey key, out bool resourceNotFound, TResourceValue defaultValue = default(TResourceValue), CultureInfo culture = null)
         {
-            var provider = GetMatchingProvider(culture ?? DefaultCulture);
+            var provider = GetMatchingProvider(culture);
+            if (provider == null && (culture == DefaultCulture || !CanFallbackToDefaultCulture() || (provider = GetMatchingProvider(DefaultCulture)) == null))
+            {
+                resourceNotFound = true;
+                return defaultValue;
+            }
+
             var result = provider.Get(key);
             if (IsValueAbsent(result))
             {
@@ -90,57 +101,24 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
         }
 
         /// <summary>
+        /// Gets a value indicating whether fallback to default culture is possible.
+        /// </summary>
+        /// <returns><c>true</c> if fallback is possible, otherwise <c>false</c>.</returns>
+        protected bool CanFallbackToDefaultCulture() => AllowFallbackToDefaultCulture && DefaultCulture != null;
+
+        /// <summary>
         /// Gets provider, that contains localizations for the specified culture.
         /// </summary>
         /// <param name="culture">The culture.</param>
         protected ILocalizableResourceProvider<TResourceKey, TResourceValue> GetMatchingProvider(CultureInfo culture)
         {
-            CultureInfo specifiedNeutralCulture = null;
-            CultureInfo defaultNeutralCulture = null;
-            if (IsCultureSupported(culture))
-                return Providers[culture];
+            if (Providers.TryGetValue(culture, out var matchingProvider))
+                return matchingProvider;
 
-            if (!culture.IsNeutralCulture && IsCultureSupported(specifiedNeutralCulture = MakeNeutral(culture)))
-                return Providers[specifiedNeutralCulture];
+            if (!culture.IsNeutralCulture && Providers.TryGetValue(culture.Parent, out var neutralProvider))
+                return neutralProvider;
 
-            if (!culture.Equals(DefaultCulture))
-            {
-                if (!IsCultureSupported(DefaultCulture))
-                    return Providers[DefaultCulture];
-
-                if (!DefaultCulture.IsNeutralCulture && IsCultureSupported(defaultNeutralCulture = MakeNeutral(DefaultCulture)))
-                    return Providers[DefaultCulture];
-            }
-
-            throw new ArgumentException($"Provider for the culture \"{culture.LCID}\" does not exist.", nameof(culture));
-        }
-
-        /// <summary>
-        /// Checks whether specified culture can be localized.
-        /// </summary>
-        /// <param name="culture">The culture.</param>
-        /// <returns><c>true<c/>, if culture can be localized. Otherwise, <c>false</c>.</returns>
-        protected bool IsCultureSupported(CultureInfo culture)
-        {
-            if (culture == null)
-                throw new ArgumentNullException(nameof(culture));
-
-            return Providers.ContainsKey(culture);
-        }
-
-        /// <summary>
-        /// Returns a neutral version of specified culture.
-        /// </summary>
-        /// <param name="culture">The culture.</param>
-        protected CultureInfo MakeNeutral(CultureInfo culture)
-        {
-            if (culture == null)
-                throw new ArgumentNullException(nameof(culture));
-
-            if (culture.IsNeutralCulture)
-                return culture;
-
-            return new CultureInfo(culture.TwoLetterISOLanguageName);
+            return null;
         }
 
         /// <summary>
@@ -187,7 +165,7 @@ namespace Unsinedz.SimpleJsonLocalization.Infrastructure
             _disposed = true;
             Providers?.ForEach(x => x.Value.Dispose());
         }
-        
+
         #endregion
     }
 }
